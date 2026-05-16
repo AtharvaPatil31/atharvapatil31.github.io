@@ -36,7 +36,7 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.25rem 3rem;
-    background: rgba(250,250,248,0.9);
+    background: rgba(250,250,248,0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(0,0,0,0.06);
   }
@@ -46,8 +46,16 @@
     font-size: 0.875rem; font-weight: 400; color: var(--gray-dark);
     text-decoration: none; letter-spacing: 0.02em;
     transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--black);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s ease;
   }
   .nav-links a:hover { color: var(--black); }
+  .nav-links a:hover::after { transform: scaleX(1); }
 
   /* HERO */
   .hero {
@@ -93,9 +101,9 @@
     text-decoration: none; transition: all 0.2s; cursor: pointer;
   }
   .btn-dark { background: var(--black); color: var(--white); border: 1px solid var(--black); }
-  .btn-dark:hover { background: #333; }
+  .btn-dark:hover { background: #2a2a2a; transform: translateY(-1px); }
   .btn-outline { background: transparent; color: var(--black); border: 1px solid rgba(0,0,0,0.2); }
-  .btn-outline:hover { border-color: var(--black); }
+  .btn-outline:hover { border-color: var(--black); transform: translateY(-1px); }
 
   /* ABOUT STRIP */
   .about-strip {
@@ -155,20 +163,7 @@
     opacity: 0; transition: opacity 0.3s;
   }
   .reel-card:hover .reel-overlay { opacity: 1; }
-  .reel-label { color: #fff; font-size: 0.8rem; font-weight: 500; }
-  .reel-placeholder {
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.75rem; color: var(--gray-dark);
-    border: 2px dashed var(--gray-mid);
-    border-radius: 12px; cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .reel-placeholder:hover { border-color: var(--black); background: #eee; }
-  .reel-placeholder svg { width: 32px; height: 32px; opacity: 0.4; }
-  .reel-placeholder span { font-size: 0.8rem; color: var(--gray-dark); }
-  .upload-input { display: none; }
+  .reel-label { color: #fff; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; }
 
   /* IMAGES GRID */
   .images-grid {
@@ -184,17 +179,6 @@
   }
   .img-card:hover { transform: scale(1.03); }
   .img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .img-placeholder {
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.5rem; border: 2px dashed var(--gray-mid);
-    border-radius: 8px; cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .img-placeholder:hover { border-color: var(--black); background: #eee; }
-  .img-placeholder svg { width: 24px; height: 24px; opacity: 0.35; }
-  .img-placeholder span { font-size: 0.75rem; color: var(--gray-dark); }
 
   /* TOOLS */
   .tools-row {
@@ -205,7 +189,9 @@
     border: 1px solid rgba(0,0,0,0.12);
     font-size: 0.8rem; color: var(--gray-dark);
     background: var(--white);
+    transition: border-color 0.2s, color 0.2s;
   }
+  .tool-tag:hover { border-color: var(--black); color: var(--black); }
 
   /* RESUME */
   .resume-card {
@@ -226,15 +212,39 @@
     display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
   }
   .contact-link {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1.25rem 1.5rem; border-radius: 12px;
+    display: flex; align-items: center; gap: 1.25rem;
+    padding: 1.4rem 1.75rem; border-radius: 12px;
     border: 1px solid rgba(0,0,0,0.1);
     text-decoration: none; color: var(--black);
-    transition: border-color 0.2s, background 0.2s;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
   }
-  .contact-link:hover { border-color: var(--black); background: var(--gray-light); }
-  .contact-icon { font-size: 1.2rem; }
-  .contact-text strong { display: block; font-size: 0.875rem; font-weight: 500; }
+  .contact-link:hover {
+    border-color: var(--black);
+    background: var(--gray-light);
+    transform: translateY(-2px);
+  }
+
+  /* SVG icons replacing emojis */
+  .contact-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.05);
+  }
+  .contact-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--gray-dark);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s;
+  }
+  .contact-link:hover .contact-icon svg { stroke: var(--black); }
+
+  .contact-text strong { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.1rem; }
   .contact-text span { font-size: 0.8rem; color: var(--gray-dark); }
 
   /* FOOTER */
@@ -247,7 +257,7 @@
   /* LIGHTBOX */
   .lightbox {
     display: none; position: fixed; inset: 0; z-index: 999;
-    background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
   }
   .lightbox.open { display: flex; }
   .lightbox img, .lightbox video {
@@ -256,20 +266,30 @@
   }
   .lightbox-close {
     position: absolute; top: 1.5rem; right: 2rem;
-    color: #fff; font-size: 2rem; cursor: pointer;
+    color: rgba(255,255,255,0.6); font-size: 1.5rem; cursor: pointer;
     background: none; border: none; line-height: 1;
+    font-family: var(--sans); font-weight: 300;
+    transition: color 0.2s;
   }
+  .lightbox-close:hover { color: #fff; }
 
-  /* ADD MORE BUTTONS */
-  .add-more-btn {
-    margin-top: 1.5rem;
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-size: 0.8rem; color: var(--gray-dark);
-    border: 1px dashed var(--gray-mid); border-radius: 2rem;
-    padding: 0.4rem 1rem; cursor: pointer;
-    background: none; transition: all 0.2s;
+  /* SUBSECTION HEADING */
+  .subsection-head {
+    margin-bottom: 1.5rem;
   }
-  .add-more-btn:hover { border-color: var(--black); color: var(--black); }
+  .subsection-head h3 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .subsection-head p {
+    color: var(--gray-dark);
+    max-width: 60ch;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
 
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
@@ -336,26 +356,23 @@
   <div class="reels-grid" id="reels-grid">
 
     <div class="reel-card" onclick="openLightboxVideo('reel1.mp4')">
-      <video src="reel1.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-      <div class="reel-overlay"><span class="reel-label">▶ Play</span></div>
+      <video src="reel1.mp4" muted loop playsinline autoplay></video>
+      <div class="reel-overlay"><span class="reel-label">Play</span></div>
     </div>
 
     <div class="reel-card" onclick="openLightboxVideo('reel2.mp4')">
-      <video src="reel2.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-      <div class="reel-overlay"><span class="reel-label">▶ Play</span></div>
+      <video src="reel2.mp4" muted loop playsinline autoplay></video>
+      <div class="reel-overlay"><span class="reel-label">Play</span></div>
     </div>
 
     <div class="reel-card" onclick="openLightboxVideo('reel3.mp4')">
-      <video src="reel3.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-      <div class="reel-overlay"><span class="reel-label">▶ Play</span></div>
+      <video src="reel3.mp4" muted loop playsinline autoplay></video>
+      <div class="reel-overlay"><span class="reel-label">Play</span></div>
     </div>
-
-    <!-- To add more videos: copy one block above, change reel4.mp4 to your filename -->
 
   </div>
 </section>
 
-<!-- IMAGES & CREATIVES -->
 <!-- IMAGES & CREATIVES -->
 <section id="creatives">
   <div class="section-header">
@@ -365,151 +382,51 @@
 
   <!-- HP ELITEBOOK -->
   <div style="margin-bottom: 5rem;">
-    
-    <div style="margin-bottom: 1.5rem;">
-      <h3 style="
-        font-family: var(--serif);
-        font-size: 2rem;
-        font-weight: 400;
-        letter-spacing: -0.03em;
-        margin-bottom: 0.5rem;
-      ">
-        HP EliteBook
-      </h3>
-
-      <p style="
-        color: var(--gray-dark);
-        max-width: 60ch;
-        font-size: 0.95rem;
-      ">
-        Product creatives and marketplace visuals created for refurbished HP EliteBook listings using Canva, Gemini, and CapCut.
-      </p>
+    <div class="subsection-head">
+      <h3>HP EliteBook</h3>
+      <p>Product creatives and marketplace visuals created for refurbished HP EliteBook listings using Canva, Gemini, and CapCut.</p>
     </div>
-
     <div class="images-grid">
-
-      <div class="img-card" onclick="openLightboxImg('hp1.jpeg')">
-        <img src="hp1.jpeg" alt="HP EliteBook 1">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('hp2.jpeg')">
-        <img src="hp2.jpeg" alt="HP EliteBook 2">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('hp3.jpeg')">
-        <img src="hp3.jpeg" alt="HP EliteBook 3">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('hp4.jpeg')">
-        <img src="hp4.jpeg" alt="HP EliteBook 4">
-      </div>
-            <div class="img-card" onclick="openLightboxImg('hp5.jpeg')">
-        <img src="hp5.jpeg" alt="HP EliteBook 4">
-
+      <div class="img-card" onclick="openLightboxImg('hp1.jpeg')"><img src="hp1.jpeg" alt="HP EliteBook 1"></div>
+      <div class="img-card" onclick="openLightboxImg('hp2.jpeg')"><img src="hp2.jpeg" alt="HP EliteBook 2"></div>
+      <div class="img-card" onclick="openLightboxImg('hp3.jpeg')"><img src="hp3.jpeg" alt="HP EliteBook 3"></div>
+      <div class="img-card" onclick="openLightboxImg('hp4.jpeg')"><img src="hp4.jpeg" alt="HP EliteBook 4"></div>
+      <div class="img-card" onclick="openLightboxImg('hp5.jpeg')"><img src="hp5.jpeg" alt="HP EliteBook 5"></div>
     </div>
   </div>
 
   <!-- DELL LATITUDE -->
   <div style="margin-bottom: 5rem;">
-    
-    <div style="margin-bottom: 1.5rem;">
-      <h3 style="
-        font-family: var(--serif);
-        font-size: 2rem;
-        font-weight: 400;
-        letter-spacing: -0.03em;
-        margin-bottom: 0.5rem;
-      ">
-        Dell Latitude
-      </h3>
-
-      <p style="
-        color: var(--gray-dark);
-        max-width: 60ch;
-        font-size: 0.95rem;
-      ">
-        Marketplace product images and social-media-ready creatives designed for Dell Latitude laptop promotions.
-      </p>
+    <div class="subsection-head">
+      <h3>Dell Latitude</h3>
+      <p>Marketplace product images and social-media-ready creatives designed for Dell Latitude laptop promotions.</p>
     </div>
-
     <div class="images-grid">
-
-      <div class="img-card" onclick="openLightboxImg('dell1.jpeg')">
-        <img src="dell1.jpeg" alt="Dell Latitude 1">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('dell2.jpeg')">
-        <img src="dell2.jpeg" alt="Dell Latitude 2">
-      </div>
-      <div class="img-card" onclick="openLightboxImg('dell4.jpeg')">
-        <img src="dell4.jpeg" alt="Dell Latitude 4">
-      </div>
-      <div class="img-card" onclick="openLightboxImg('dell5.jpeg')">
-        <img src="dell5.jpeg" alt="Dell Latitude 4">
-      </div>
-       <div class="img-card" onclick="openLightboxImg('dell6.jpeg')">
-        <img src="dell6.jpeg" alt="Dell Latitude 4">
-      </div>
-
+      <div class="img-card" onclick="openLightboxImg('dell1.jpeg')"><img src="dell1.jpeg" alt="Dell Latitude 1"></div>
+      <div class="img-card" onclick="openLightboxImg('dell2.jpeg')"><img src="dell2.jpeg" alt="Dell Latitude 2"></div>
+      <div class="img-card" onclick="openLightboxImg('dell4.jpeg')"><img src="dell4.jpeg" alt="Dell Latitude 4"></div>
+      <div class="img-card" onclick="openLightboxImg('dell5.jpeg')"><img src="dell5.jpeg" alt="Dell Latitude 5"></div>
+      <div class="img-card" onclick="openLightboxImg('dell6.jpeg')"><img src="dell6.jpeg" alt="Dell Latitude 6"></div>
     </div>
   </div>
 
   <!-- LENOVO THINKPAD -->
   <div style="margin-bottom: 4rem;">
-    
-    <div style="margin-bottom: 1.5rem;">
-      <h3 style="
-        font-family: var(--serif);
-        font-size: 2rem;
-        font-weight: 400;
-        letter-spacing: -0.03em;
-        margin-bottom: 0.5rem;
-      ">
-        Lenovo ThinkPad
-      </h3>
-
-      <p style="
-        color: var(--gray-dark);
-        max-width: 60ch;
-        font-size: 0.95rem;
-      ">
-        Content and product visuals created for Lenovo ThinkPad listings targeted toward students and office users.
-      </p>
+    <div class="subsection-head">
+      <h3>Lenovo ThinkPad</h3>
+      <p>Content and product visuals created for Lenovo ThinkPad listings targeted toward students and office users.</p>
     </div>
-
     <div class="images-grid">
-
-      <div class="img-card" onclick="openLightboxImg('lenovo1.jpeg')">
-        <img src="lenovo1.jpeg" alt="Lenovo ThinkPad 1">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('lenovo2.jpeg')">
-        <img src="lenovo2.jpeg" alt="Lenovo ThinkPad 2">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('lenovo3.jpeg')">
-        <img src="lenovo3.jpeg" alt="Lenovo ThinkPad 3">
-      </div>
-
-      <div class="img-card" onclick="openLightboxImg('lenovo4.jpeg')">
-        <img src="lenovo4.jpeg" alt="Lenovo ThinkPad 4">
-      </div>
-
+      <div class="img-card" onclick="openLightboxImg('lenovo1.jpeg')"><img src="lenovo1.jpeg" alt="Lenovo ThinkPad 1"></div>
+      <div class="img-card" onclick="openLightboxImg('lenovo2.jpeg')"><img src="lenovo2.jpeg" alt="Lenovo ThinkPad 2"></div>
+      <div class="img-card" onclick="openLightboxImg('lenovo3.jpeg')"><img src="lenovo3.jpeg" alt="Lenovo ThinkPad 3"></div>
+      <div class="img-card" onclick="openLightboxImg('lenovo4.jpeg')"><img src="lenovo4.jpeg" alt="Lenovo ThinkPad 4"></div>
     </div>
   </div>
 
   <!-- TOOLS -->
   <div style="margin-top: 3rem;">
-    <p style="
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray-dark);
-      margin-bottom: 1rem;
-    ">
-      Tools I use
-    </p>
-
+    <p style="font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-dark); margin-bottom: 1rem;">Tools I use</p>
     <div class="tools-row">
       <span class="tool-tag">Canva</span>
       <span class="tool-tag">CapCut</span>
@@ -521,13 +438,7 @@
       <span class="tool-tag">Odoo CRM</span>
     </div>
   </div>
-
 </section>
-    <!-- To add more: copy one block above, change img7.jpg to your filename -->
-
-  </div>
-
-
 
 <!-- RESUME -->
 <section id="resume">
@@ -545,9 +456,6 @@
       <a href="https://www.linkedin.com/in/atharvapatil31/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
     </div>
   </div>
-  <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--gray-dark);">
-    * Place your exported resume PDF in the same folder as this HTML file and rename it <code>resume.pdf</code>
-  </p>
 </section>
 
 <!-- CONTACT -->
@@ -556,38 +464,51 @@
     <h2 class="section-title">Get in touch</h2>
     <span class="section-num">04</span>
   </div>
-  <p style="color: var(--gray-dark); max-width: 45ch; font-size: 1rem;">
+  <p style="color: var(--gray-dark); max-width: 45ch; font-size: 1rem; line-height: 1.7;">
     Open to internships, freelance projects, and collaborations in digital marketing and tech.
   </p>
   <div class="contact-grid">
+
     <a href="mailto:atharvadp31@gmail.com" class="contact-link">
-      <span class="contact-icon">✉️</span>
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      </div>
       <div class="contact-text">
         <strong>Email</strong>
         <span>atharvadp31@gmail.com</span>
       </div>
     </a>
+
     <a href="https://www.linkedin.com/in/atharvapatil31/" target="_blank" class="contact-link">
-      <span class="contact-icon">💼</span>
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </div>
       <div class="contact-text">
         <strong>LinkedIn</strong>
         <span>atharvapatil31</span>
       </div>
     </a>
+
     <a href="https://github.com/AtharvaPatil31" target="_blank" class="contact-link">
-      <span class="contact-icon">🐙</span>
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </div>
       <div class="contact-text">
         <strong>GitHub</strong>
         <span>AtharvaPatil31</span>
       </div>
     </a>
+
     <a href="tel:+918788441274" class="contact-link">
-      <span class="contact-icon">📱</span>
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+      </div>
       <div class="contact-text">
         <strong>Phone</strong>
         <span>+91 87884 41274</span>
       </div>
     </a>
+
   </div>
 </section>
 
