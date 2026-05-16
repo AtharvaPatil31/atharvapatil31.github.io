@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atharva Patil — Digital Marketing & Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0f0f0f;
+    --white: #fafaf8;
+    --gray-light: #f2f1ee;
+    --gray-mid: #c8c7c2;
+    --gray-dark: #6b6a66;
+    --accent: #1a1a1a;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(250,250,248,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.2rem; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 0.875rem; font-weight: 400; color: var(--gray-dark);
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-family: var(--serif); font-size: clamp(8rem, 18vw, 18rem);
+    color: rgba(0,0,0,0.03); white-space: nowrap;
+    pointer-events: none; user-select: none; letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .hero-tag {
+    font-size: 0.75rem; letter-spacing: 0.15em; color: var(--gray-dark);
+    text-transform: uppercase; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: ''; display: block; width: 2rem; height: 1px; background: var(--gray-mid);
+  }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 4rem);
+    line-height: 1.05; letter-spacing: -0.03em; font-weight: 400;
+    max-width: 14ch;
+  }
+  .hero h1 em { font-style: italic; color: var(--gray-dark); }
+  .hero-sub {
+    margin-top: 2rem; font-size: 1rem; color: var(--gray-dark);
+    max-width: 44ch; font-weight: 300; line-height: 1.7;
+  }
+  .hero-cta {
+    margin-top: 2.5rem; display: flex; gap: 1rem; align-items: center;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.75rem; border-radius: 2rem;
+    font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; transition: all 0.2s; cursor: pointer;
+  }
+  .btn-dark { background: var(--black); color: var(--white); border: 1px solid var(--black); }
+  .btn-dark:hover { background: #333; }
+  .btn-outline { background: transparent; color: var(--black); border: 1px solid rgba(0,0,0,0.2); }
+  .btn-outline:hover { border-color: var(--black); }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .about-cell {
+    padding: 3rem; border-right: 1px solid rgba(0,0,0,0.08);
+  }
+  .about-cell:last-child { border-right: none; }
+  .about-cell .num {
+    font-family: var(--serif); font-size: 3.5rem; line-height: 1;
+    letter-spacing: -0.04em; margin-bottom: 0.5rem;
+  }
+  .about-cell .label {
+    font-size: 0.8rem; color: var(--gray-dark); letter-spacing: 0.05em;
+    text-transform: uppercase; font-weight: 400;
+  }
+
+  /* SECTION */
+  section { padding: 5rem 3rem; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em; font-weight: 400;
+  }
+  .section-num {
+    font-size: 0.75rem; color: var(--gray-mid); letter-spacing: 0.1em;
+    font-weight: 300;
+  }
+
+  /* REELS GRID */
+  .reels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .reel-card {
+    border-radius: 12px; overflow: hidden;
+    background: var(--gray-light);
+    aspect-ratio: 9/16;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .reel-card:hover { transform: scale(1.02); }
+  .reel-card video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .reel-card .reel-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+    display: flex; align-items: flex-end; padding: 1rem;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .reel-card:hover .reel-overlay { opacity: 1; }
+  .reel-label { color: #fff; font-size: 0.8rem; font-weight: 500; }
+  .reel-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.75rem; color: var(--gray-dark);
+    border: 2px dashed var(--gray-mid);
+    border-radius: 12px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .reel-placeholder:hover { border-color: var(--black); background: #eee; }
+  .reel-placeholder svg { width: 32px; height: 32px; opacity: 0.4; }
+  .reel-placeholder span { font-size: 0.8rem; color: var(--gray-dark); }
+  .upload-input { display: none; }
+
+  /* IMAGES GRID */
+  .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .img-card {
+    border-radius: 8px; overflow: hidden;
+    aspect-ratio: 1; background: var(--gray-light);
+    position: relative; cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .img-card:hover { transform: scale(1.03); }
+  .img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem; border: 2px dashed var(--gray-mid);
+    border-radius: 8px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .img-placeholder:hover { border-color: var(--black); background: #eee; }
+  .img-placeholder svg { width: 24px; height: 24px; opacity: 0.35; }
+  .img-placeholder span { font-size: 0.75rem; color: var(--gray-dark); }
+
+  /* TOOLS */
+  .tools-row {
+    display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;
+  }
+  .tool-tag {
+    padding: 0.4rem 1rem; border-radius: 2rem;
+    border: 1px solid rgba(0,0,0,0.12);
+    font-size: 0.8rem; color: var(--gray-dark);
+    background: var(--white);
+  }
+
+  /* RESUME */
+  .resume-card {
+    background: var(--gray-light); border-radius: 16px;
+    padding: 3rem; display: flex;
+    align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+  }
+  .resume-card h3 {
+    font-family: var(--serif); font-size: 1.8rem;
+    font-weight: 400; letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .resume-card p { font-size: 0.9rem; color: var(--gray-dark); max-width: 40ch; }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.25rem 1.5rem; border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    text-decoration: none; color: var(--black);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--black); background: var(--gray-light); }
+  .contact-icon { font-size: 1.2rem; }
+  .contact-text strong { display: block; font-size: 0.875rem; font-weight: 500; }
+  .contact-text span { font-size: 0.8rem; color: var(--gray-dark); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: var(--gray-dark);
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,0.9); align-items: center; justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img, .lightbox video {
+    max-width: 90vw; max-height: 90vh;
+    border-radius: 8px; object-fit: contain;
+  }
+  .lightbox-close {
+    position: absolute; top: 1.5rem; right: 2rem;
+    color: #fff; font-size: 2rem; cursor: pointer;
+    background: none; border: none; line-height: 1;
+  }
+
+  /* ADD MORE BUTTONS */
+  .add-more-btn {
+    margin-top: 1.5rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; color: var(--gray-dark);
+    border: 1px dashed var(--gray-mid); border-radius: 2rem;
+    padding: 0.4rem 1rem; cursor: pointer;
+    background: none; transition: all 0.2s;
+  }
+  .add-more-btn:hover { border-color: var(--black); color: var(--black); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .about-strip { grid-template-columns: 1fr; }
+    .about-cell { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); padding: 2rem 1.5rem; }
+    section { padding: 3rem 1.5rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .resume-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Atharva Patil</div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#creatives">Creatives</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">AP</div>
+  <div class="hero-tag">Digital Marketer & Tech Builder</div>
+  <h1>Content that moves. <em>Products that sell.</em></h1>
+  <p class="hero-sub">
+    Computer Engineering student at MMCOE, Pune — building real marketing experience through Raj Infotech, social media content, and hands-on tech projects.
+  </p>
+  <div class="hero-cta">
+    <a href="#work" class="btn btn-dark">View my work ↓</a>
+    <a href="#contact" class="btn btn-outline">Get in touch</a>
+  </div>
+</div>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-cell">
+    <div class="num">10+</div>
+    <div class="label">Laptops sold organically</div>
+  </div>
+  <div class="about-cell">
+    <div class="num">9.18</div>
+    <div class="label">CGPA — MMCOE Pune</div>
+  </div>
+  <div class="about-cell">
+    <div class="num">Top 10%</div>
+    <div class="label">Harvard HPAIR 2026 Delegate</div>
+  </div>
+</div>
+
+<!-- REELS & VIDEOS -->
+<section id="work">
+  <div class="section-header">
+    <h2 class="section-title">Reels & Videos</h2>
+    <span class="section-num">01</span>
+  </div>
+  <div class="reels-grid" id="reels-grid">
+
+    <div class="reel-card" onclick="openLightboxVideo('reel1.mp4')">
+      <video src="reel1.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <div class="reel-overlay"><span class="reel-label">▶ Play</span></div>
+    </div>
+
+    <div class="reel-card" onclick="openLightboxVideo('reel2.mp4')">
+      <video src="reel2.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <div class="reel-overlay"><span class="reel-label">▶ Play</span></div>
+    </div>
+
+    <div class="reel-card" onclick="openLightboxVideo('reel3.mp4')">
+      <video src="reel3.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <div class="reel-overlay"><span class="reel-label">▶ Play</span></div>
+    </div>
+
+    <!-- To add more videos: copy one block above, change reel4.mp4 to your filename -->
+
+  </div>
+</section>
+
+<!-- IMAGES & CREATIVES -->
+<!-- IMAGES & CREATIVES -->
+<section id="creatives">
+  <div class="section-header">
+    <h2 class="section-title">Laptop Creatives</h2>
+    <span class="section-num">02</span>
+  </div>
+
+  <!-- HP ELITEBOOK -->
+  <div style="margin-bottom: 5rem;">
+    
+    <div style="margin-bottom: 1.5rem;">
+      <h3 style="
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+      ">
+        HP EliteBook
+      </h3>
+
+      <p style="
+        color: var(--gray-dark);
+        max-width: 60ch;
+        font-size: 0.95rem;
+      ">
+        Product creatives and marketplace visuals created for refurbished HP EliteBook listings using Canva, Gemini, and CapCut.
+      </p>
+    </div>
+
+    <div class="images-grid">
+
+      <div class="img-card" onclick="openLightboxImg('hp1.jpeg')">
+        <img src="hp1.jpeg" alt="HP EliteBook 1">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('hp2.jpeg')">
+        <img src="hp2.jpeg" alt="HP EliteBook 2">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('hp3.jpeg')">
+        <img src="hp3.jpeg" alt="HP EliteBook 3">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('hp4.jpeg')">
+        <img src="hp4.jpeg" alt="HP EliteBook 4">
+      </div>
+            <div class="img-card" onclick="openLightboxImg('hp5.jpeg')">
+        <img src="hp5.jpeg" alt="HP EliteBook 4">
+
+    </div>
+  </div>
+
+  <!-- DELL LATITUDE -->
+  <div style="margin-bottom: 5rem;">
+    
+    <div style="margin-bottom: 1.5rem;">
+      <h3 style="
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+      ">
+        Dell Latitude
+      </h3>
+
+      <p style="
+        color: var(--gray-dark);
+        max-width: 60ch;
+        font-size: 0.95rem;
+      ">
+        Marketplace product images and social-media-ready creatives designed for Dell Latitude laptop promotions.
+      </p>
+    </div>
+
+    <div class="images-grid">
+
+      <div class="img-card" onclick="openLightboxImg('dell1.jpeg')">
+        <img src="dell1.jpeg" alt="Dell Latitude 1">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('dell2.jpeg')">
+        <img src="dell2.jpeg" alt="Dell Latitude 2">
+      </div>
+      <div class="img-card" onclick="openLightboxImg('dell4.jpeg')">
+        <img src="dell4.jpeg" alt="Dell Latitude 4">
+      </div>
+      <div class="img-card" onclick="openLightboxImg('dell5.jpeg')">
+        <img src="dell5.jpeg" alt="Dell Latitude 4">
+      </div>
+       <div class="img-card" onclick="openLightboxImg('dell6.jpeg')">
+        <img src="dell6.jpeg" alt="Dell Latitude 4">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LENOVO THINKPAD -->
+  <div style="margin-bottom: 4rem;">
+    
+    <div style="margin-bottom: 1.5rem;">
+      <h3 style="
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+      ">
+        Lenovo ThinkPad
+      </h3>
+
+      <p style="
+        color: var(--gray-dark);
+        max-width: 60ch;
+        font-size: 0.95rem;
+      ">
+        Content and product visuals created for Lenovo ThinkPad listings targeted toward students and office users.
+      </p>
+    </div>
+
+    <div class="images-grid">
+
+      <div class="img-card" onclick="openLightboxImg('lenovo1.jpeg')">
+        <img src="lenovo1.jpeg" alt="Lenovo ThinkPad 1">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('lenovo2.jpeg')">
+        <img src="lenovo2.jpeg" alt="Lenovo ThinkPad 2">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('lenovo3.jpeg')">
+        <img src="lenovo3.jpeg" alt="Lenovo ThinkPad 3">
+      </div>
+
+      <div class="img-card" onclick="openLightboxImg('lenovo4.jpeg')">
+        <img src="lenovo4.jpeg" alt="Lenovo ThinkPad 4">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div style="margin-top: 3rem;">
+    <p style="
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-dark);
+      margin-bottom: 1rem;
+    ">
+      Tools I use
+    </p>
+
+    <div class="tools-row">
+      <span class="tool-tag">Canva</span>
+      <span class="tool-tag">CapCut</span>
+      <span class="tool-tag">Gemini</span>
+      <span class="tool-tag">ChatGPT</span>
+      <span class="tool-tag">Facebook Marketplace</span>
+      <span class="tool-tag">Instagram</span>
+      <span class="tool-tag">WhatsApp Business</span>
+      <span class="tool-tag">Odoo CRM</span>
+    </div>
+  </div>
+
+</section>
+    <!-- To add more: copy one block above, change img7.jpg to your filename -->
+
+  </div>
+
+
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="section-header">
+    <h2 class="section-title">Resume</h2>
+    <span class="section-num">03</span>
+  </div>
+  <div class="resume-card">
+    <div>
+      <h3>Atharva Patil</h3>
+      <p>Digital Marketer · Flutter Developer · CE Student at MMCOE, Pune · Harvard HPAIR 2026 Delegate</p>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a href="resume.pdf" download class="btn btn-dark">Download PDF ↓</a>
+      <a href="https://www.linkedin.com/in/atharvapatil31/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--gray-dark);">
+    * Place your exported resume PDF in the same folder as this HTML file and rename it <code>resume.pdf</code>
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <h2 class="section-title">Get in touch</h2>
+    <span class="section-num">04</span>
+  </div>
+  <p style="color: var(--gray-dark); max-width: 45ch; font-size: 1rem;">
+    Open to internships, freelance projects, and collaborations in digital marketing and tech.
+  </p>
+  <div class="contact-grid">
+    <a href="mailto:atharvadp31@gmail.com" class="contact-link">
+      <span class="contact-icon">✉️</span>
+      <div class="contact-text">
+        <strong>Email</strong>
+        <span>atharvadp31@gmail.com</span>
+      </div>
+    </a>
+    <a href="https://www.linkedin.com/in/atharvapatil31/" target="_blank" class="contact-link">
+      <span class="contact-icon">💼</span>
+      <div class="contact-text">
+        <strong>LinkedIn</strong>
+        <span>atharvapatil31</span>
+      </div>
+    </a>
+    <a href="https://github.com/AtharvaPatil31" target="_blank" class="contact-link">
+      <span class="contact-icon">🐙</span>
+      <div class="contact-text">
+        <strong>GitHub</strong>
+        <span>AtharvaPatil31</span>
+      </div>
+    </a>
+    <a href="tel:+918788441274" class="contact-link">
+      <span class="contact-icon">📱</span>
+      <div class="contact-text">
+        <strong>Phone</strong>
+        <span>+91 87884 41274</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Atharva Patil</span>
+  <span>Pune, India · Open to remote opportunities</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" style="display:none;">
+  <video id="lightbox-vid" controls style="display:none;"></video>
+</div>
+
+<script>
+function openLightboxImg(url) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const vid = document.getElementById('lightbox-vid');
+  img.src = url; img.style.display = 'block';
+  vid.style.display = 'none'; vid.src = '';
+  lb.classList.add('open');
+}
+
+function openLightboxVideo(url) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const vid = document.getElementById('lightbox-vid');
+  vid.src = url; vid.style.display = 'block';
+  img.style.display = 'none'; img.src = '';
+  lb.classList.add('open');
+  vid.play();
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  const vid = document.getElementById('lightbox-vid');
+  lb.classList.remove('open');
+  vid.pause(); vid.src = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
